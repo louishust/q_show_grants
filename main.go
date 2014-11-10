@@ -43,7 +43,6 @@ func initConnection() {
 	if err != nil {
 		exitWithMessage(err.Error())
 	}
-	fmt.Printf("Connect Successfully!\n")
 	con = conn
 }
 
