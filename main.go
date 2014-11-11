@@ -14,10 +14,10 @@ var con *sql.DB = nil
 
 var options struct {
 	Version bool   `short:"v" long:"version" description:"Print version"`
-	Host    string `long:"host" description:"Server hostname or IP"`
-	Port    string `long:"port" description:"Server port" default:"3306"`
-	User    string `long:"user" description:"Database user"`
-	Pass    string `long:"pass" description:"Password for user"`
+	Host    string `short:"H" long:"host" description:"Server hostname or IP"`
+	Port    string `short:"P" long:"port" description:"Server port" default:"3306"`
+	User    string `short:"u" long:"user" description:"Database user"`
+	Pass    string `short:"p" long:"pass" description:"Password for user"`
 }
 
 func exitWithMessage(message string) {
@@ -57,6 +57,8 @@ func main() {
 	if err != nil {
 		exitWithMessage(err.Error())
 	}
+	fmt.Println("\nPrivileges for user", options.User)
+	fmt.Println("--------------------------------------------------------------------- ")
 	var row string
 	for rows.Next() {
 		err = rows.Scan(&row)
@@ -65,4 +67,5 @@ func main() {
 		}
 		fmt.Println(row)
 	}
+	fmt.Println("---------------------------------------------------------------------\n ")
 }
