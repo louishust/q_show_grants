@@ -13,11 +13,12 @@ const VERSION = "1.0.0"
 var con *sql.DB = nil
 
 var options struct {
+	Help    bool   `long:"help" description:"Show this help message"`
 	Version bool   `short:"v" long:"version" description:"Print version"`
-	Host    string `short:"H" long:"host" description:"Server hostname or IP" required:"true"`
+	Host    string `short:"h" long:"host" description:"Server hostname or IP" default:"localhost"`
 	Port    string `short:"P" long:"port" description:"Server port" default:"3306"`
-	User    string `short:"u" long:"user" description:"Database user" required:"true"`
-	Pass    string `short:"p" long:"pass" description:"Password for user" required:"true"`
+	User    string `short:"u" long:"user" description:"Database user"`
+	Pass    string `short:"p" long:"password" description:"Password for user"`
 }
 
 func exitWithMessage(message string) {
@@ -26,10 +27,15 @@ func exitWithMessage(message string) {
 }
 
 func initOptions() {
-	_, err := flags.ParseArgs(&options, os.Args)
-
+	p := flags.NewParser(&options, flags.Default&^flags.HelpFlag)
+	_, err := p.Parse()
 	if err != nil {
 		os.Exit(1)
+	}
+
+	if options.Help {
+		p.WriteHelp(os.Stdout)
+		os.Exit(0)
 	}
 
 	if options.Version {
