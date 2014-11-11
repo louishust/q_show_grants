@@ -14,10 +14,10 @@ var con *sql.DB = nil
 
 var options struct {
 	Version bool   `short:"v" long:"version" description:"Print version"`
-	Host    string `short:"H" long:"host" description:"Server hostname or IP"`
+	Host    string `short:"H" long:"host" description:"Server hostname or IP" required:"true"`
 	Port    string `short:"P" long:"port" description:"Server port" default:"3306"`
-	User    string `short:"u" long:"user" description:"Database user"`
-	Pass    string `short:"p" long:"pass" description:"Password for user"`
+	User    string `short:"u" long:"user" description:"Database user" required:"true"`
+	Pass    string `short:"p" long:"pass" description:"Password for user" required:"true"`
 }
 
 func exitWithMessage(message string) {
